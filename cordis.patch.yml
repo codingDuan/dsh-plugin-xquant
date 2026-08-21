@@ -1,0 +1,11 @@
+- insert:
+    - id: mcp-xquant
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: xquant
+        transport: streamable-http
+        url: !!js '`${(process.env.XQUANT_MCP_ORIGIN ?? "https://xquant.shop").replace(/\/$/, "")}/xquant-mcp/mcp`'
+        headers:
+          Authorization: !!js '`Bearer ${process.env.XQUANT_API_KEY}`'
+    - id: xquant-research-guidance
+      name: dsh-plugin-xquant
