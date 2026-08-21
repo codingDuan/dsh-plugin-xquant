@@ -25,5 +25,19 @@ jobs:
       - run: npm --version
       - run: pnpm install --frozen-lockfile
       - run: pnpm test && pnpm run typecheck && pnpm run build
-      - run: npm publish --provenance --access public
+      - id: version
+        run: |
+          package_version="$(node -p \"require('./package.json').version\")"
+          tag_version="${GITHUB_REF_NAME#v}"
+          test "$tag_version" = "$package_version"
+          echo "package_version=$package_version" >> "$GITHUB_OUTPUT"
+      - id: registry
+        run: |
+          if npm view "dsh-plugin-xquant@${{ steps.version.outputs.package_version }}" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.registry.outputs.already_published == 'false'
+        run: npm publish --provenance --access public
       - uses: softprops/action-gh-release@v2
