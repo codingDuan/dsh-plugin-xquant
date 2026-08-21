@@ -6,7 +6,23 @@
 
 ## 安装
 
-先在 [xquant 开发者中心](https://xquant.shop/developer?utm=dsh) 创建 API Key，然后在终端设置它：
+### 1. 安装 dsh
+
+```bash
+npm install --global @deepseek-ai/dsh@0.1.0-rc.7
+dsh --version
+```
+
+如果提示 `dsh: command not found`，执行下面两行后重开终端：
+
+```bash
+echo 'export PATH="$(npm prefix -g)/bin:$PATH"' >> ~/.zshrc
+exec zsh
+```
+
+### 2. 安装 xquant 插件
+
+先在 [xquant 开发者中心](https://xquant.shop/developer?utm=dsh) 创建 API Key，再执行：
 
 ```bash
 export XQUANT_API_KEY='xq_live_...'
