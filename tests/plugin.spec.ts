@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it, vi } from 'vitest'
 
-import { apply, RESEARCH_GUIDANCE, xquantMcpUrl } from '../src/index.js'
+import { apply, inject, RESEARCH_GUIDANCE, xquantMcpUrl } from '../src/index.js'
 
 describe('xquant MCP endpoint', () => {
   it('uses the official endpoint when no override is supplied', () => {
@@ -23,6 +23,10 @@ describe('xquant MCP endpoint', () => {
 })
 
 describe('Cordis plugin', () => {
+  it('declares the system prompt service required by apply', () => {
+    expect(inject).toEqual(['systemPrompt'])
+  })
+
   it('registers the research prompt without mounting a second MCP client', async () => {
     const ctx = {
       effect: vi.fn((effect: () => unknown) => effect()),
