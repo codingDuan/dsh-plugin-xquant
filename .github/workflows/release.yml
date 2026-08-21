@@ -27,7 +27,7 @@ jobs:
       - run: pnpm test && pnpm run typecheck && pnpm run build
       - id: version
         run: |
-          package_version="$(node -p \"require('./package.json').version\")"
+          package_version="$(node -p "require('./package.json').version")"
           tag_version="${GITHUB_REF_NAME#v}"
           test "$tag_version" = "$package_version"
           echo "package_version=$package_version" >> "$GITHUB_OUTPUT"
