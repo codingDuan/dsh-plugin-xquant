@@ -33,6 +33,10 @@ export function xquantMcpUrl(origin = process.env.XQUANT_MCP_ORIGIN): string {
 
 export const name = 'xquant'
 
+// Cordis only exposes services that a plugin declares up front. Keep this
+// explicit so the prompt section works when loaded from a dsh profile bundle.
+export const inject = ['systemPrompt']
+
 export async function apply(ctx: Context): Promise<void> {
   ctx.effect(() => ctx.systemPrompt.section({
     name: 'xquant:research-guidance',
